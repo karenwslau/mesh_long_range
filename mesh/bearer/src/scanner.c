@@ -489,7 +489,7 @@ void scanner_init(bearer_event_flag_callback_t packet_process_cb)
 
     packet_buffer_init(&m_scanner.packet_buffer, m_scanner.packet_buffer_data, SCANNER_BUFFER_SIZE);
     scanner_config_reset();
-    m_scanner.config.radio_config.tx_power = RADIO_POWER_NRF_0DBM;
+    m_scanner.config.radio_config.tx_power = RADIO_POWER_NRF_POS8DBM;
     m_scanner.config.radio_config.payload_maxlen = RADIO_CONFIG_ADV_MAX_PAYLOAD_SIZE;
     m_scanner.timer_window_end.cb = scan_window_end;
     m_scanner.timer_window_start.cb = scan_window_start;

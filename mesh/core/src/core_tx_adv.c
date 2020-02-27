@@ -220,7 +220,7 @@ static void core_tx_tx_power_delete(mesh_config_entry_id_t entry_id)
 {
     core_tx_role_t role = (core_tx_role_t) (entry_id.record - MESH_OPT_CORE_TX_POWER_RECORD_START);
     NRF_MESH_ASSERT_DEBUG(role < CORE_TX_ROLE_COUNT);
-    advertiser_tx_power_set(&m_bearer_roles[role].advertiser, RADIO_POWER_NRF_0DBM);
+    advertiser_tx_power_set(&m_bearer_roles[role].advertiser, RADIO_POWER_NRF_POS8DBM);
 }
 
 static uint32_t core_tx_adv_addr_set(mesh_config_entry_id_t entry_id, const void * p_entry)

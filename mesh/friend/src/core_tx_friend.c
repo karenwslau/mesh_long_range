@@ -156,7 +156,7 @@ void core_tx_friend_init(core_tx_friend_t * p_bearer, nrf_mesh_tx_token_t token)
 {
     p_bearer->broadcast.params.access_address = BEARER_ACCESS_ADDR_DEFAULT;
     p_bearer->broadcast.params.radio_config.radio_mode = RADIO_MODE_BLE_1MBIT;
-    p_bearer->broadcast.params.radio_config.tx_power = RADIO_POWER_NRF_0DBM;
+    p_bearer->broadcast.params.radio_config.tx_power = RADIO_POWER_NRF_POS8DBM;
     p_bearer->broadcast.params.radio_config.payload_maxlen = RADIO_CONFIG_ADV_MAX_PAYLOAD_SIZE;
     p_bearer->broadcast.params.p_channels = m_adv_channels;
     p_bearer->broadcast.params.channel_count = ARRAY_SIZE((uint8_t[]) NRF_MESH_ADV_CHAN_DEFAULT);
