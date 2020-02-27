@@ -149,7 +149,14 @@ void radio_config_config(const radio_config_t * const p_config)
         NRF_RADIO->PCNF0 |= ((RADIO_PCNF0_PLEN_16bit << RADIO_PCNF0_PLEN_Pos) & RADIO_PCNF0_PLEN_Msk);
     }
 #endif
-
+    if (p_config->radio_mode==RADIO_MODE_NRF_62K5BIT )
+    {
+      NRF_RADIO->PCNF0 |=(
+                   ((RADIO_PCNF0_PLEN_LongRange << RADIO_PCNF0_PLEN_Pos) & RADIO_PCNF0_PLEN_Msk) |
+                   ((2 << RADIO_PCNF0_CILEN_Pos) & RADIO_PCNF0_CILEN_Msk) |
+                   ((3 << RADIO_PCNF0_TERMLEN_Pos) & RADIO_PCNF0_TERMLEN_Msk) );
+        
+    }
 #endif
 }
 
