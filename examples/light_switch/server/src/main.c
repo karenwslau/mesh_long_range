@@ -65,6 +65,7 @@
 #include "rtt_input.h"
 
 /* Example specific includes */
+#include "sdk_config.h"
 #include "app_config.h"
 #include "example_common.h"
 #include "nrf_mesh_config_examples.h"
@@ -118,7 +119,9 @@ static void app_model_init(void)
 static void node_reset(void)
 {
     __LOG(LOG_SRC_APP, LOG_LEVEL_INFO, "----- Node reset  -----\n");
+#ifndef DONGLE
     hal_led_blink_ms(LEDS_MASK, LED_BLINK_INTERVAL_MS, LED_BLINK_CNT_RESET);
+#endif
     /* This function may return if there are ongoing flash operations. */
     mesh_stack_device_reset();
 }
@@ -142,7 +145,9 @@ static void button_event_handler(uint32_t button_number)
         case 0:
         {
             __LOG(LOG_SRC_APP, LOG_LEVEL_INFO, "User action \n");
+#ifndef DONGLE
             hal_led_pin_set(ONOFF_SERVER_0_LED, !hal_led_pin_get(ONOFF_SERVER_0_LED));
+#endif
             app_onoff_status_publish(&m_onoff_server_0);
             break;
         }
@@ -182,15 +187,19 @@ static void app_rtt_input_handler(int key)
 
 static void device_identification_start_cb(uint8_t attention_duration_s)
 {
+#ifndef DONGLE
     hal_led_mask_set(LEDS_MASK, false);
     hal_led_blink_ms(BSP_LED_2_MASK  | BSP_LED_3_MASK,
                      LED_BLINK_ATTENTION_INTERVAL_MS,
                      LED_BLINK_ATTENTION_COUNT(attention_duration_s));
+#endif
 }
 
 static void provisioning_aborted_cb(void)
 {
+#ifndef DONGLE
     hal_led_blink_stop();
+#endif
 }
 
 static void provisioning_complete_cb(void)
@@ -207,10 +216,11 @@ static void provisioning_complete_cb(void)
     dsm_local_unicast_address_t node_address;
     dsm_local_unicast_addresses_get(&node_address);
     __LOG(LOG_SRC_APP, LOG_LEVEL_INFO, "Node Address: 0x%04x \n", node_address.address_start);
-
+#ifndef DONGLE
     hal_led_blink_stop();
     hal_led_mask_set(LEDS_MASK, LED_MASK_STATE_OFF);
     hal_led_blink_ms(LEDS_MASK, LED_BLINK_INTERVAL_MS, LED_BLINK_CNT_PROV);
+#endif
 }
 
 static void models_init_cb(void)
@@ -287,16 +297,16 @@ static void start(void)
     mesh_app_uuid_print(nrf_mesh_configure_device_uuid_get());
 
     ERROR_CHECK(mesh_stack_start());
-
+#ifndef DONGLE
     hal_led_mask_set(LEDS_MASK, LED_MASK_STATE_OFF);
     hal_led_blink_ms(LEDS_MASK, LED_BLINK_INTERVAL_MS, LED_BLINK_CNT_START);
+#endif
 }
 
 int main(void)
 {
     initialize();
     start();
-
     for (;;)
     {
         (void)sd_app_evt_wait();
